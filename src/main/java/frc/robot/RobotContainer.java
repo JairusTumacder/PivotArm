@@ -7,7 +7,9 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.PivotArmButtonCmd;
 import frc.robot.commands.PivotArmJoystickCmd;
+import frc.robot.commands.PivotPID1Cmd;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PivotArmSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,7 +30,6 @@ public class RobotContainer {
   private TalonEncoder tEnc;
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final PivotArmSubsystem p_subsystem = new PivotArmSubsystem(tEnc);
-  private final PivotArmJoystickCmd p_cmd = new PivotArmJoystickCmd(p_subsystem);
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
       new CommandXboxController(OperatorConstants.kDriverControllerPort);
@@ -38,6 +39,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
+    //p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY()));
     configureBindings();
   }
   /**
@@ -54,11 +56,11 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
+    new JoystickButton(joystick1, 1).onTrue(new PivotArmButtonCmd(p_subsystem));
+    new JoystickButton(joystick1, 2).onTrue(new PivotPID1Cmd(p_subsystem));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-    new JoystickButton(joystick1, 1).onTrue(p_cmd);
-    new JoystickButton(joystick1, 2).onTrue(p_cmd);
   }
 
   /**
