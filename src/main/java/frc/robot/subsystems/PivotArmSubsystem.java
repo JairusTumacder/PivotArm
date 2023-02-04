@@ -50,7 +50,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         right.set(ControlMode.PercentOutput, speed.getAsDouble());
     }
 
-    public void pivotDown(double speed){ // Pivots the arm down based on its speed
+    public void pivotArm(double speed){ // Pivots the arm based on its speed
         right.set(ControlMode.PercentOutput, speed);
     }
 
