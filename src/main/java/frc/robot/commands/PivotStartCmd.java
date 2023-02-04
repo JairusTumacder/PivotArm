@@ -1,13 +1,14 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PivotArmSubsystem;
 
-public class PivotPID1Cmd extends CommandBase{ // Pivot PID Command 
+public class PivotStartCmd extends CommandBase{ // Pivot PID Command 
     private PivotArmSubsystem p_subsystem; 
-
-    public PivotPID1Cmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
+    private Timer timer = new Timer();
+    public PivotStartCmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
         p_subsystem = p_subs;
         addRequirements(p_subs);
     }
@@ -20,17 +21,22 @@ public class PivotPID1Cmd extends CommandBase{ // Pivot PID Command
     @Override
     public void execute(){ // Executes and runs the Pivot Arm PID
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        p_subsystem.pivotArmPID(6000);
-   
+        p_subsystem.limitPress();
     }
 
     @Override
     public void end(boolean interrupted){ // Ends the code when isFinished is true
+        SmartDashboard.putString("isFinished?", "yes");
+        timer.reset();
+        timer.start();
+        while(timer.get() < 0.5){
 
+        }
+        p_subsystem.resetEncoder();
     }
 
     @Override
     public boolean isFinished(){ // Returns true when the code is finished
-        return false;
+        return p_subsystem.limitHit();
     }
 }

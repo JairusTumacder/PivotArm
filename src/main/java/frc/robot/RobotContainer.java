@@ -9,7 +9,8 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PivotArmButtonCmd;
 import frc.robot.commands.PivotArmJoystickCmd;
-import frc.robot.commands.PivotPID1Cmd;
+import frc.robot.commands.PivotPID123Cmd;
+import frc.robot.commands.PivotStartCmd;
 import frc.robot.commands.PivotPID2Cmd;
 import frc.robot.commands.PivotPID3Cmd;
 import frc.robot.commands.ResetEncoder;
@@ -60,10 +61,11 @@ public class RobotContainer {
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
     new JoystickButton(joystick1, 1).onTrue(new PivotArmButtonCmd(p_subsystem)); // When the joystick button is toggled, runs the Pivot Arm Button Command
-    new JoystickButton(joystick1, 2).onTrue(new PivotPID1Cmd(p_subsystem)); // When the joystick's second button is toggled, run the Pivot PID Command
+    new JoystickButton(joystick1, 2).onTrue(new PivotStartCmd(p_subsystem)); // When the joystick's second button is toggled, run the Pivot PID Command
     new JoystickButton(joystick1, 3).onTrue(new PivotPID2Cmd(p_subsystem)); // When the joystick's third button is toggled, run the Pivot PID2 Command
     new JoystickButton(joystick1, 4).onTrue(new PivotPID3Cmd(p_subsystem)); // When the joystick's fourth button is toggled, run the Pivot PID3 Command
-    new JoystickButton(joystick1, 5).onTrue(new ResetEncoder(p_subsystem)); // When the joystick's fifth button is toggled, reset the encoder's
+    new JoystickButton(joystick1, 5).onTrue(new PivotPID123Cmd(p_subsystem)); // When the joystick's fifth button is toggled, run the Pivot PID123 Command
+    new JoystickButton(joystick1, 6).onTrue(new ResetEncoder(p_subsystem)); // When the joystick's sixth button is toggled, reset the encoders
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

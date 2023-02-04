@@ -10,16 +10,19 @@ import frc.robot.subsystems.TalonEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+
 public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
     //////////////////
    //  Variables  ///
   //////////////////
     private final TalonSRX right = new TalonSRX(4);
+    private final DigitalInput limitSwitch = new DigitalInput(3);
     private double kp;
     private double ki;
     private double kd;
-    private final PIDController pid = new PIDController(0.0006, 0.00006, 0);
+    private final PIDController pid = new PIDController(0.0005, 0.00001, 0.000007);
     private final TalonEncoder tEnc;
     private double before;
 
@@ -67,6 +70,20 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         }
     }
 
+    public void limitPress(){
+        if(limitSwitch.get() == false){
+            right.set(ControlMode.PercentOutput, pidOutput(0));
+        }
+        else{
+            pivotStop();
+            resetEncoder();
+        }
+    }
+
+    public boolean limitHit(){
+        return limitSwitch.get();
+    }
+
     /////////////////////////
    // Pivot PID Methods  ///
   ///////////////////////// 
@@ -81,7 +98,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         before = pid.getPositionError(); 
     }
 
-    public double calcP(double setpoint){ // Calculates the value of the Porportional Term by multiplying the error (setpoint - encoder) by the kP constantSets the limit of the error
+    public double pidOutput(double setpoint){ // Calculates the value of the Porportional Term by multiplying the error (setpoint - encoder) by the kP constantSets the limit of the error
         double error = pid.calculate(getEncoder(), setpoint);
         if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
             return 0;
@@ -117,7 +134,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
         double e = pid.calculate(setpoint);
         SmartDashboard.putNumber("Error: ", e);
-        right.set(ControlMode.PercentOutput, calcP(setpoint));
+        right.set(ControlMode.PercentOutput, pidOutput(setpoint));
         compareErrors();
     }
     
@@ -127,6 +144,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     @Override
     public void periodic(){ // Prints and edits kp, ki, and kd so you do not have to redeploy and edit code
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder());
+        SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get());
         kp = SmartDashboard.getNumber("kP", 0);
         SmartDashboard.putNumber("kP", kp);
         ki = SmartDashboard.getNumber("kI", 0);
