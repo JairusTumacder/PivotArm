@@ -58,11 +58,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         right.set(ControlMode.PercentOutput, 0);
     }
 
-    public double pivotDeadZone(double speed){
-        if(Math.abs(speed) < 0.1){
+    public double pivotDeadZone(double speed){ // Sets a deadzone for the Pivot Arm when moved by a joystick
+        if(Math.abs(speed) < 0.1){ // If the absolute value of the speed is less than 0.1, return a speed of 0
             return 0;
         }
-        else{
+        else{ // If everything else fails, return the speed
             return speed;
         }
     }
