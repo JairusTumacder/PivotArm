@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import javax.swing.JPopupMenu.Separator;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
