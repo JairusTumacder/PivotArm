@@ -16,7 +16,7 @@ public class PivotArmJoystickCmd extends CommandBase{
     }
 
     @Override
-    public void initialize(){ // Resets the TalonSRX Encoder
+    public void initialize(){ // Runs code when command starts
     }
 
     @Override
@@ -31,7 +31,7 @@ public class PivotArmJoystickCmd extends CommandBase{
     }
 
     @Override
-    public boolean isFinished(){
+    public boolean isFinished(){ // Returns False when the code isFinished
         return false;
     }
 }

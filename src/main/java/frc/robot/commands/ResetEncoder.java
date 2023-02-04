@@ -6,7 +6,7 @@ import frc.robot.subsystems.PivotArmSubsystem;
 public class ResetEncoder extends CommandBase {
     private PivotArmSubsystem p_subsystem; 
 
-    public ResetEncoder(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
+    public ResetEncoder(PivotArmSubsystem p_subs){ // Reset Encoder Command
         p_subsystem = p_subs;
         addRequirements(p_subs);
     }
@@ -17,18 +17,18 @@ public class ResetEncoder extends CommandBase {
     }
 
     @Override
-    public void execute(){ // Executes and runs the Pivot Arm PID
+    public void execute(){ // Executes and resets the encoder 
         p_subsystem.resetEncoder();
    
     }
 
     @Override
-    public void end(boolean interrupted){ // Ends the code when isFinished is true
+    public void end(boolean interrupted){ // Runs this code when it is finished 
 
     }
 
     @Override
-    public boolean isFinished(){ // Returns true when the code is finished
+    public boolean isFinished(){ // Ends the code when isFinished is true 
         return true;
     }
     
