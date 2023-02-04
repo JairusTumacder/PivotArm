@@ -10,7 +10,7 @@ public class PivotPID3Cmd extends CommandBase{
 
     public PivotPID3Cmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
         p_subsystem = p_subs;
-        
+        addRequirements(p_subs);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class PivotPID3Cmd extends CommandBase{
     @Override
     public void execute(){ // Executes and runs the Pivot Arm PID
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        p_subsystem.pivotArmPID(1000);
+        p_subsystem.pivotArmPID(2000);
    
     }
 
