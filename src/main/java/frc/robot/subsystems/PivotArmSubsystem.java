@@ -19,9 +19,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     private double kp;
     private double ki;
     private double kd;
-    private final PIDController pid = new PIDController(0.0005, 0.05, 0.000006);
+    private final PIDController pid = new PIDController(0.0006, 0.00006, 0);
     private final TalonEncoder tEnc;
-    private double setpoint;
     private double before;
 
 
@@ -90,7 +89,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public double calcD(double setpoint){ // Calculates the value of the Derivative Term by multiplying the error rate by the kD constant
-        double before = pid.getPositionError();
         double after = pid.getPositionError();
         if((after - before) > 0.5){ // If the error rate (error - previous error) is greater than a limit of 0.2, return a value of 0.2
             return 0.5;
