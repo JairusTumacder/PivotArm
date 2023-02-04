@@ -22,6 +22,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     private final PIDController pid = new PIDController(0.0005, 0.05, 0.000006);
     private final TalonEncoder tEnc;
     private double setpoint;
+    private double before;
 
 
     ////////////////////////////////////////
@@ -62,7 +63,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    // Pivot PID Methods  ///
   ///////////////////////// 
     public void compareErrors(){ // Resets the Integral Term if it reaches a certain limit
-        double before = pid.getPositionError(); 
         double after = pid.getPositionError();
         if(before > 0 && after < 0){ // If the error changes from a positive to a negative, reset the previous error and the I term
             pid.reset();
@@ -70,9 +70,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         else if(before < 0 && after > 0){ // If the error changes from a negative to a positive, reset the previous error and the I term
             pid.reset();
         }
-        else{ // If everything else fails, calculate the error
-            pid.calculate(getEncoder(), setpoint);
-        }
+        before = pid.getPositionError(); 
     }
 
     public double calcP(double setpoint){ // Calculates the value of the Porportional Term by multiplying the error (setpoint - encoder) by the kP constantSets the limit of the error
@@ -107,6 +105,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
+        double c = pid.calculate(setpoint);
+        SmartDashboard.putNumber("Error: ", c);
         right.set(ControlMode.PercentOutput, calcP(setpoint));
         compareErrors();
     }
