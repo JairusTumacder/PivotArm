@@ -117,7 +117,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
         double e = pid.calculate(setpoint);
         SmartDashboard.putNumber("Error: ", e);
-        right.set(ControlMode.PercentOutput, calcP(setpoint) + calcD(setpoint));
+        right.set(ControlMode.PercentOutput, calcP(setpoint));
         compareErrors();
     }
     
