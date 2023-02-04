@@ -47,7 +47,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    //  Set Pivot Speed Methods  ///
   ////////////////////////////////
     public void pivotUp(DoubleSupplier speed){ // Pivots the arm up based on its speed
-        right.set(ControlMode.PercentOutput, speed.getAsDouble());
+        right.set(ControlMode.PercentOutput, pivotDeadZone(speed.getAsDouble()));
     }
 
     public void pivotArm(double speed){ // Pivots the arm based on its speed
@@ -56,6 +56,15 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
     public void pivotStop(){ // Stops the Pivot Arm Motor 
         right.set(ControlMode.PercentOutput, 0);
+    }
+
+    public double pivotDeadZone(double speed){
+        if(Math.abs(speed) < 0.1){
+            return 0;
+        }
+        else{
+            return speed;
+        }
     }
 
     /////////////////////////
