@@ -10,6 +10,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PivotArmButtonCmd;
 import frc.robot.commands.PivotArmJoystickCmd;
 import frc.robot.commands.PivotPID1Cmd;
+import frc.robot.commands.ResetEncoder;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.PivotArmSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
@@ -39,7 +40,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    //p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY()));
+    p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY()));
     configureBindings();
   }
   /**
@@ -56,8 +57,9 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new JoystickButton(joystick1, 1).onTrue(new PivotArmButtonCmd(p_subsystem));
-    new JoystickButton(joystick1, 2).onTrue(new PivotPID1Cmd(p_subsystem));
+    new JoystickButton(joystick1, 1).onTrue(new PivotArmButtonCmd(p_subsystem)); // When the joystick button is toggled, runs the Pivot Arm Button Command
+    new JoystickButton(joystick1, 2).onTrue(new PivotPID1Cmd(p_subsystem)); // When the joystick's second button is toggled, run the Pivot PID Command
+    new JoystickButton(joystick1, 3).onTrue(new ResetEncoder(p_subsystem));
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

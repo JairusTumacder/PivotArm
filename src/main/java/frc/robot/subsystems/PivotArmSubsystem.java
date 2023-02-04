@@ -15,7 +15,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     //////////////////
     //  Variables  //
     ////////////////
-    private final TalonSRX right = new TalonSRX(2);
+    private final TalonSRX right = new TalonSRX(4);
     private double kp;
     private double ki;
     private double kd;
@@ -46,8 +46,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     ////////////////////////////////
     //  Set Pivot Speed Methods  //
     //////////////////////////////
-    public void pivotUp(double speed){ // Pivots the arm up based on its speed
-        right.set(ControlMode.PercentOutput,speed);
+    public void pivotUp(DoubleSupplier speed){ // Pivots the arm up based on its speed
+        right.set(ControlMode.PercentOutput, speed.getAsDouble());
     }
 
     public void pivotDown(double speed){ // Pivots the arm down based on its speed
@@ -115,6 +115,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
         right.set(ControlMode.PercentOutput, calcP(setpoint));
+        compareErrors();
     }
     
     ///////////////////////

@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PivotArmSubsystem;
 
 public class PivotArmJoystickCmd extends CommandBase{
-    /*private PivotArmSubsystem p_subsystem;
+    private PivotArmSubsystem p_subsystem;
     private final DoubleSupplier speed;
 
     public PivotArmJoystickCmd(PivotArmSubsystem p_subs, DoubleSupplier speed){ // Command Constructor
@@ -17,7 +17,6 @@ public class PivotArmJoystickCmd extends CommandBase{
 
     @Override
     public void initialize(){ // Resets the TalonSRX Encoder
-        p_subsystem.resetEncoder();
     }
 
     @Override
@@ -34,5 +33,5 @@ public class PivotArmJoystickCmd extends CommandBase{
     @Override
     public boolean isFinished(){
         return false;
-    }*/
+    }
 }
