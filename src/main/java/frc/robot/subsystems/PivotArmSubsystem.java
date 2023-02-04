@@ -86,10 +86,10 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
             return 0;
         }
-        if(error > 0.5){ // If the error is greater than a limit of 0.2, return a value of 0.2
+        if(error > 0.5){ // If the error is greater than a limit of 0.5, return a value of 0.5
             return 0.5;
         }
-        else if(error < -0.5){ // If the error is less than a limit of -0.2, return a value of -0.2
+        else if(error < -0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
             return -0.5;
         }
         else{ // If everything else fails, return the error 
@@ -98,23 +98,28 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public double calcD(double setpoint){ // Calculates the value of the Derivative Term by multiplying the error rate by the kD constant
-        double after = pid.getPositionError();
-        if((after - before) > 0.5){ // If the error rate (error - previous error) is greater than a limit of 0.2, return a value of 0.2
+        double vError = pid.getVelocityError();
+        if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
+            return 0;
+        }
+        if(vError > 0.5){ // If the error is greater than a limit of 0.5, return a value of 0.5
             return 0.5;
         }
-        else if((after - before) < -0.5){ // If the error rate is less than a limit of -0.2, return a value of -0.2
+        else if(vError < -0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
             return -0.5;
         }
-        else{ // If everything else fails, return the error
-            return pid.calculate(getEncoder(), setpoint); 
+        else{ // If everything else fails, return the velocity error
+            return vError; 
         }
         
     }
 
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
-        double c = pid.calculate(setpoint);
-        SmartDashboard.putNumber("Error: ", c);
-        right.set(ControlMode.PercentOutput, calcP(setpoint));
+        double e = pid.calculate(setpoint);
+        SmartDashboard.putNumber("Error: ", e);
+        double v = pid.calculate(pid.getVelocityError());
+        SmartDashboard.putNumber("Velocity Error: ", v);
+        right.set(ControlMode.PercentOutput, calcP(setpoint) + calcD(setpoint));
         compareErrors();
     }
     
