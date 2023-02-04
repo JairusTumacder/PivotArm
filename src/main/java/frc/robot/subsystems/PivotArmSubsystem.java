@@ -105,7 +105,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         if(vError > 0.5){ // If the error is greater than a limit of 0.5, return a value of 0.5
             return 0.5;
         }
-        else if(vError < -0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
+        else if(vError < 0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
             return -0.5;
         }
         else{ // If everything else fails, return the velocity error
@@ -117,7 +117,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
         double e = pid.calculate(setpoint);
         SmartDashboard.putNumber("Error: ", e);
-        right.set(ControlMode.PercentOutput, calcP(setpoint));
+        right.set(ControlMode.PercentOutput, calcP(setpoint) + calcD(setpoint));
         compareErrors();
     }
     
