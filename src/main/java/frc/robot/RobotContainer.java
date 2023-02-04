@@ -59,7 +59,7 @@ public class RobotContainer {
 
     new JoystickButton(joystick1, 1).onTrue(new PivotArmButtonCmd(p_subsystem)); // When the joystick button is toggled, runs the Pivot Arm Button Command
     new JoystickButton(joystick1, 2).onTrue(new PivotPID1Cmd(p_subsystem)); // When the joystick's second button is toggled, run the Pivot PID Command
-    new JoystickButton(joystick1, 3).onTrue(new ResetEncoder(p_subsystem));
+    new JoystickButton(joystick1, 3).onTrue(new ResetEncoder(p_subsystem)); // When the joystick's third button is toggled, reset the encoder
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

@@ -35,7 +35,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     ////////////////////////
     //  Encoder Methods  //
     //////////////////////
-    public double getEncoder(){ // Return the Encoder
+    public double getEncoder(){ // Return the Encoder Value
        return right.getSensorCollection().getQuadraturePosition();
     }
 
@@ -54,16 +54,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         right.set(ControlMode.PercentOutput, speed);
     }
 
-    public void pivotStop(){
+    public void pivotStop(){ // Stops the Pivot Arm Motor 
         right.set(ControlMode.PercentOutput, 0);
-    }
-
-    public double pivotDeadZone(double speed){ // Sets a deadzone on the joystick and arm so when the speed is less than a certain value it will stop the motors
-        if(speed < 0.1)
-            return 0;
-        else{
-            return speed;
-        }
     }
 
     /////////////////////////
@@ -72,43 +64,44 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void compareErrors(){ // Resets the Integral Term if it reaches a certain limit
         double before = pid.getPositionError(); 
         double after = pid.getPositionError();
-        if(before > 0 && after < 0){
+        if(before > 0 && after < 0){ // If the error changes from a positive to a negative, reset the previous error and the I term
             pid.reset();
         }
-        else if(before < 0 && after > 0){
+        else if(before < 0 && after > 0){ // If the error changes from a negative to a positive, reset the previous error and the I term
             pid.reset();
         }
-        else{
+        else{ // If everything else fails, calculate the error
             pid.calculate(getEncoder(), setpoint);
         }
     }
 
     public double calcP(double setpoint){ // Calculates the value of the Porportional Term by multiplying the error (setpoint - encoder) by the kP constantSets the limit of the error
-        double error = pid.getPositionError();  // Sets the limits of the setpoint
-        if(pid.atSetpoint()){
+        double error = pid.getPositionError();
+        if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
             return 0;
         }
-        if(error > 1){
-            return 1;
+        if(error > 0.2){ // If the error is greater than a limit of 0.2, return a value of 0.2
+            return 0.2;
         }
-        else if(error < -1){
-            return -1;
+        else if(error < -0.2){ // If the error is less than a limit of -0.2, return a value of -0.2
+            return -0.2;
         }
-        else{
+        else{ // If everything else fails, return the error 
             return error;
         }
     }
 
     public double calcD(double setpoint){ // Calculates the value of the Derivative Term by multiplying the error rate by the kD constant
-        double error = pid.getPositionError();
-        if(error > setpoint){
-            return error;
+        double before = pid.getPositionError();
+        double after = pid.getPositionError();
+        if((after - before) > 0.2){ // If the error rate (error - previous error) is greater than a limit of 0.2, return a value of 0.2
+            return 0.2;
         }
-        else if(error < setpoint){
-            return error;
+        else if((after - before) < -0.2){ // If the error rate is less than a limit of -0.2, return a value of -0.2
+            return -0.2;
         }
-        else{
-            return pid.calculate(kd, setpoint); 
+        else{ // If everything else fails, return the error
+            return pid.calculate(getEncoder(), setpoint); 
         }
         
     }
