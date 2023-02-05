@@ -29,7 +29,7 @@ public class PivotStartCmd extends CommandBase{ // Pivot PID Command
         SmartDashboard.putString("isFinished?", "yes");
         timer.reset();
         timer.start();
-        while(timer.get() < 0.5){
+        while(timer.get() < 2){
 
         }
         p_subsystem.resetEncoder();
