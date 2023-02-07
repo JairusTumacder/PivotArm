@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.LockPIDCmd;
 import frc.robot.commands.PivotArmButtonCmd;
 import frc.robot.commands.PivotArmJoystickCmd;
 import frc.robot.commands.PivotPID123Cmd;
@@ -66,6 +67,7 @@ public class RobotContainer {
     new JoystickButton(joystick1, 4).onTrue(new PivotPID3Cmd(p_subsystem)); // When the joystick's fourth button is toggled, run the Pivot PID3 Command
     new JoystickButton(joystick1, 5).onTrue(new PivotPID123Cmd(p_subsystem)); // When the joystick's fifth button is toggled, run the Pivot PID123 Command
     new JoystickButton(joystick1, 6).onTrue(new ResetEncoder(p_subsystem)); // When the joystick's sixth button is toggled, reset the encoders
+    new JoystickButton(joystick1, 7).whileTrue(new LockPIDCmd(p_subsystem, () -> joystick1.getY())); // When the joystick's sixth button is toggled, run the LockPID Command
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

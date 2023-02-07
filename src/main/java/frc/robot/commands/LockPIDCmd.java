@@ -5,34 +5,34 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PivotArmSubsystem;
 
-public class PivotArmJoystickCmd extends CommandBase{
+public class LockPIDCmd extends CommandBase{
     private PivotArmSubsystem p_subsystem;
     private final DoubleSupplier speed;
 
-    public PivotArmJoystickCmd(PivotArmSubsystem p_subs, DoubleSupplier speed){ // Command Constructor
+    public LockPIDCmd(PivotArmSubsystem p_subs, DoubleSupplier speed){
         p_subsystem = p_subs;
         this.speed = speed;
         addRequirements(p_subs);
     }
 
     @Override
-    public void initialize(){ // Runs code when command starts
+    public void initialize(){
 
     }
 
     @Override
-    public void execute(){ // Executes and sets the pivot up based on its speed
+    public void execute(){
         p_subsystem.pivotUp(speed);
-   
+        p_subsystem.lockPID();
     }
 
     @Override
-    public void end(boolean interrupted){ // Runs code when ends
+    public void end(boolean interrupted){
 
     }
 
     @Override
-    public boolean isFinished(){ // Returns False when the code isFinished
+    public boolean isFinished(){
         return false;
     }
 }

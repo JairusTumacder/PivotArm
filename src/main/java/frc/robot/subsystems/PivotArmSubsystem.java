@@ -25,6 +25,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     private final PIDController pid = new PIDController(0.0005, 0.00001, 0.000007);
     private final TalonEncoder tEnc;
     private double before;
+    private int steps;
 
 
     ////////////////////////////////////////
@@ -70,18 +71,22 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         }
     }
 
-    public void limitPress(){
-        if(limitSwitch.get() == false){
+    public void limitPress(){ // Returns whether the limit is pressed or not
+        if(!limitSwitch.get()){ // If the limit switch is not pressed, runs the PID to 0
             right.set(ControlMode.PercentOutput, pidOutput(0));
         }
-        else{
+        else{ // If the limit switch is pressed, stop the pivot arm and reset the encoders
             pivotStop();
             resetEncoder();
         }
     }
 
-    public boolean limitHit(){
+    public boolean limitHit(){ // Returns if the limit switch is pressed or not
         return limitSwitch.get();
+    }
+
+    public void lockPID(){ // Locks the PID based on the encoder value
+        pidOutput(getEncoder());
     }
 
     /////////////////////////
