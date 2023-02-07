@@ -6,6 +6,7 @@ import frc.robot.subsystems.PivotArmSubsystem;
 
 public class PivotPID123Cmd extends CommandBase{ // PID123 Command 
     private PivotArmSubsystem p_subsystem;
+    private int steps = 0;
 
     public PivotPID123Cmd(PivotArmSubsystem p_subs){ // PID123 Command Constructor
         p_subsystem = p_subs;
@@ -13,15 +14,28 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
     }
     @Override
     public void initialize(){ // Runs the code when the command starts
-
+        p_subsystem.limitPress();
+        steps = 0;
     }
     @Override
     public void execute(){ // Runs after the command starts
         SmartDashboard.putNumber("Pivot Encoder: ", p_subsystem.getEncoder());
-        p_subsystem.limitPress();
-        p_subsystem.pivotArmPID(1500);
-        p_subsystem.limitPress();
-        p_subsystem.pivotArmPID(4000);
+        switch(steps){
+            case 0: 
+            p_subsystem.pivotArmPID(1500);
+            steps++;
+            break;
+
+            case 1:
+            p_subsystem.limitPress();
+            steps++;
+            break;
+
+            case 2: 
+            p_subsystem.pivotArmPID(4000);
+            steps++;
+            break;
+        }
     }
     @Override
     public void end(boolean interrupted){ // Runs when the command ends
@@ -29,6 +43,6 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
     }
     @Override
     public boolean isFinished(){ // The command finishes when this returns false
-        return false;
+        return steps == 3;
     }
 }
