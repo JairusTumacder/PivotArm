@@ -43,7 +43,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY()));
+    p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick moves up and down, move the pivot arm in the same direction
     configureBindings();
   }
   /**

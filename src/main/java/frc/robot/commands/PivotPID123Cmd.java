@@ -39,7 +39,7 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
     }
     @Override
     public void end(boolean interrupted){ // Runs when the command ends
-
+        p_subsystem.limitPress();
     }
     @Override
     public boolean isFinished(){ // The command finishes when this returns false
