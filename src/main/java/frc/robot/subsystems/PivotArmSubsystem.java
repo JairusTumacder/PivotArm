@@ -114,23 +114,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         }
     }
 
-    public double calcD(double setpoint){ // Calculates the value of the Derivative Term by multiplying the error rate by the kD constant
-        double vError = pid.getVelocityError();
-        if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
-            return 0;
-        }
-        if(vError > 0.5){ // If the error is greater than a limit of 0.5, return a value of 0.5
-            return 0.5;
-        }
-        else if(vError < 0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
-            return -0.5;
-        }
-        else{ // If everything else fails, return the velocity error
-            return vError; 
-        }
-        
-    }
-
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
         double e = pid.calculate(setpoint);
         SmartDashboard.putNumber("Error: ", e);
