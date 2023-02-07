@@ -19,7 +19,7 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
     public void execute(){ // Runs after the command starts
         SmartDashboard.putNumber("Pivot Encoder: ", p_subsystem.getEncoder());
         p_subsystem.limitPress();
-        p_subsystem.pivotArmPID(2000);
+        p_subsystem.pivotArmPID(1500);
         p_subsystem.limitPress();
         p_subsystem.pivotArmPID(4000);
     }
