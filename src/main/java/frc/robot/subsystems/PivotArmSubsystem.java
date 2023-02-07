@@ -136,5 +136,4 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         SmartDashboard.putNumber("kD", kd);
     }
 
-
 }
