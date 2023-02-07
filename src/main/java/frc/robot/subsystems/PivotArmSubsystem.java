@@ -28,17 +28,17 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     private int steps;
 
 
-    ////////////////////////////////////////
-   //  Pivot Arm Subsystem Constructor  ///
-  ////////////////////////////////////////
+    /////////////////////////////////////////
+   ///  Pivot Arm Subsystem Constructor  ///
+  /////////////////////////////////////////
     public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable
         tEnc = enc;
         pid.setTolerance(5);
     }
 
-    ////////////////////////
-   //  Encoder Methods  ///
-  ////////////////////////
+    /////////////////////////
+   ///  Encoder Methods  ///
+  /////////////////////////
     public double getEncoder(){ // Return the Encoder Value
        return right.getSensorCollection().getQuadraturePosition();
     }
@@ -47,9 +47,9 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         right.getSensorCollection().setQuadraturePosition(0, 5);
     }
 
-    ////////////////////////////////
-   //  Set Pivot Speed Methods  ///
-  ////////////////////////////////
+    /////////////////////////////////
+   ///  Set Pivot Speed Methods  ///
+  /////////////////////////////////
     public void pivotUp(DoubleSupplier speed){ // Pivots the arm up based on its speed
         right.set(ControlMode.PercentOutput, pivotDeadZone(speed.getAsDouble()));
     }
@@ -89,9 +89,9 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         pidOutput(getEncoder());
     }
 
-    /////////////////////////
-   // Pivot PID Methods  ///
-  ///////////////////////// 
+    //////////////////////////
+   /// Pivot PID Methods  ///
+  //////////////////////////
     public void compareErrors(){ // Resets the Integral Term if it reaches a certain limit
         double after = pid.getPositionError();
         if(before > 0 && after < 0){ // If the error changes from a positive to a negative, reset the previous error and the I term
@@ -126,9 +126,9 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         compareErrors();
     }
     
-    ///////////////////////
-   //  Printing Method ///
-  ///////////////////////
+    ////////////////////////
+   ///  Printing Method ///
+  ////////////////////////
     @Override
     public void periodic(){ // Prints and edits kp, ki, and kd so you do not have to redeploy and edit code
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
