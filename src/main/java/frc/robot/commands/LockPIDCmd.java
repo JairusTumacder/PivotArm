@@ -7,21 +7,24 @@ import frc.robot.subsystems.PivotArmSubsystem;
 
 public class LockPIDCmd extends CommandBase{
     private PivotArmSubsystem p_subsystem;
-    private final DoubleSupplier speed;
+    private final DoubleSupplier joystickspeed;
+    private double speed;
 
-    public LockPIDCmd(PivotArmSubsystem p_subs, DoubleSupplier speed){
+    public LockPIDCmd(PivotArmSubsystem p_subs, DoubleSupplier joystickspeed){
         p_subsystem = p_subs;
-        this.speed = speed;
+        this.joystickspeed = joystickspeed;
         addRequirements(p_subs);
     }
 
     @Override
     public void initialize(){
+    
     }
 
     @Override
     public void execute(){
-        new PivotArmJoystickCmd(p_subsystem, speed);
+        new PivotArmJoystickCmd(p_subsystem, joystickspeed);
+        speed = joystickspeed.getAsDouble();
         
     }
 
@@ -32,6 +35,6 @@ public class LockPIDCmd extends CommandBase{
 
     @Override
     public boolean isFinished(){
-        return true;
+        return speed == 0;
     }
 }
