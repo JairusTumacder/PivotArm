@@ -79,7 +79,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
             resetEncoder();
         }
     }
-
+                
     public boolean limitHit(){ // Returns if the limit switch is pressed or not
         return limitSwitch.get();
     }
