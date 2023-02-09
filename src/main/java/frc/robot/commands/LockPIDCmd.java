@@ -17,22 +17,21 @@ public class LockPIDCmd extends CommandBase{
 
     @Override
     public void initialize(){
-
     }
 
     @Override
     public void execute(){
-        p_subsystem.pivotUp(speed);
-        p_subsystem.lockPID();
+        new PivotArmJoystickCmd(p_subsystem, speed);
+        
     }
 
     @Override
     public void end(boolean interrupted){
-
+        p_subsystem.lockPID();
     }
 
     @Override
     public boolean isFinished(){
-        return false;
+        return true;
     }
 }

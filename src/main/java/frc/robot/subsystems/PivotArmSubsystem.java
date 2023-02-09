@@ -85,7 +85,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public void lockPID(){ // Locks the PID based on the encoder value
-        pidOutput(getEncoder());
+        pivotArmPID(pidOutput(getEncoder()));
+        compareErrors();
     }
 
     //////////////////////////
