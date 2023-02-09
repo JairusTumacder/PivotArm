@@ -14,18 +14,17 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
-    //////////////////
-   //  Variables  ///
-  //////////////////
+    ///////////////// 
+   //  Variables  //
+  /////////////////
     private final TalonSRX right = new TalonSRX(4);
     private final DigitalInput limitSwitch = new DigitalInput(3);
     private double kp;
-    private double ki;
+    private double ki; 
     private double kd;
     private final PIDController pid = new PIDController(0.0005, 0.00001, 0.000007);
     private final TalonEncoder tEnc;
     private double before;
-    private int steps;
 
 
     /////////////////////////////////////////
@@ -140,5 +139,4 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         kd = SmartDashboard.getNumber("kD", 0);
         SmartDashboard.putNumber("kD", kd);
     }
-
 }
