@@ -31,7 +31,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     /////////////////////////////////////////
    ///  Pivot Arm Subsystem Constructor  ///
   /////////////////////////////////////////
-    public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable
+    public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
         tEnc = enc;
         pid.setTolerance(5);
     }
