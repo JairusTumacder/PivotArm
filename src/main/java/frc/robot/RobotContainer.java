@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.TalonEncoder;
+import frc.robot.commands.PivotArmPIDCmd;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -43,7 +44,7 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the trigger bindings
-    p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick moves up and down, move the pivot arm in the same direction
+    //p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick moves up and down, move the pivot arm in the same direction
     configureBindings();
   }
   /**
@@ -66,6 +67,8 @@ public class RobotContainer {
     new JoystickButton(joystick1, 4).onTrue(new PivotPID3Cmd(p_subsystem)); // When the joystick's fourth button is toggled, run the Pivot PID3 Command
     new JoystickButton(joystick1, 5).whileTrue(new PivotPID123Cmd(p_subsystem)); // When the joystick's fifth button is toggled, run the Pivot PID123 Command
     new JoystickButton(joystick1, 6).onTrue(new ResetEncoder(p_subsystem)); // When the joystick's sixth button is toggled, reset the encoders
+    new JoystickButton(joystick1, 7).onTrue(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick's seventh button is pressed, drive the motors using the joystick
+    new JoystickButton(joystick1, 8).onTrue(new PivotArmPIDCmd(p_subsystem)); // When the joystick's eighth button is pressed, lock the PID based on the encoder
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());

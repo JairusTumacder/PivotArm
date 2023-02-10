@@ -95,6 +95,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         return limitSwitch.get();
     }
 
+    public void lockPID(){ // Sets the PID to the certain encoder value
+        pivotArmPID(pidOutput(getEncoder()));
+        compareErrors();
+    }
+
     //////////////////////////
    /// Pivot PID Methods  ///
   //////////////////////////
