@@ -7,8 +7,10 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.subsystems.TalonEncoder;
+import frc.robot.subsystems.SingleChannelEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -18,11 +20,14 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    //  Variables  //
   /////////////////
     private final TalonSRX right = new TalonSRX(4);
-    private final DigitalInput limitSwitch = new DigitalInput(3);
+    private final WPI_TalonSRX talon =  new WPI_TalonSRX(5);
+    private final DigitalInput limitSwitch = new DigitalInput(6);
+    private final DigitalInput encoder = new DigitalInput(5);
+    private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
     private double kp;
     private double ki; 
     private double kd;
-    private final PIDController pid = new PIDController(0.0005, 0.00001, 0.000007);
+    private final PIDController pid = new PIDController(0.05, 0, 0);
     private final TalonEncoder tEnc;
     private double before;
 
@@ -39,26 +44,31 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    ///  Encoder Methods  ///
   /////////////////////////
     public double getEncoder(){ // Return the Encoder Value
-       return right.getSensorCollection().getQuadraturePosition();
+        //return right.getSensorCollection().getQuadraturePosition();
+        return sEnc.get();
     }
 
     public void resetEncoder(){ // Resets the Encoder to a Position of 0
-        right.getSensorCollection().setQuadraturePosition(0, 5);
+        //right.getSensorCollection().setQuadraturePosition(0, 5);
+        sEnc.reset();
     }
 
     /////////////////////////////////
    ///  Set Pivot Speed Methods  ///
   /////////////////////////////////
     public void pivotUp(DoubleSupplier speed){ // Pivots the arm up based on its speed
-        right.set(ControlMode.PercentOutput, pivotDeadZone(speed.getAsDouble()));
+        //right.set(ControlMode.PercentOutput, pivotDeadZone(speed.getAsDouble()));
+        talon.set(pivotDeadZone(speed.getAsDouble()));
     }
 
     public void pivotArm(double speed){ // Pivots the arm based on its speed
-        right.set(ControlMode.PercentOutput, speed);
+        //right.set(ControlMode.PercentOutput, speed);
+        talon.set(speed);
     }
 
     public void pivotStop(){ // Stops the Pivot Arm Motor 
-        right.set(ControlMode.PercentOutput, 0);
+        //right.set(ControlMode.PercentOutput, 0);
+        talon.stopMotor();
     }
 
     public double pivotDeadZone(double speed){ // Sets a deadzone for the Pivot Arm when moved by a joystick
@@ -72,7 +82,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
     public void limitPress(){ // Returns whether the limit is pressed or not
         if(!limitSwitch.get()){ // If the limit switch is not pressed, runs the PID to 0
-            right.set(ControlMode.PercentOutput, pidOutput(0));
+            //right.set(ControlMode.PercentOutput, pidOutput(0));
+            talon.set(pidOutput(0));
         }
         else{ // If the limit switch is pressed, stop the pivot arm and reset the encoders
             pivotStop();
@@ -82,11 +93,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
                 
     public boolean limitHit(){ // Returns if the limit switch is pressed or not
         return limitSwitch.get();
-    }
-
-    public void lockPID(){ // Locks the PID based on the encoder value
-        pivotArmPID(pidOutput(getEncoder()));
-        compareErrors();
     }
 
     //////////////////////////
@@ -122,7 +128,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void pivotArmPID(double setpoint){ // Outputs the PID speed to the motors
         double e = pid.calculate(setpoint);
         SmartDashboard.putNumber("Error: ", e);
-        right.set(ControlMode.PercentOutput, pidOutput(setpoint));
+        //right.set(ControlMode.PercentOutput, pidOutput(setpoint));
+        talon.set(pidOutput(setpoint));
         compareErrors();
     }
     
