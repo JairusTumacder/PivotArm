@@ -20,7 +20,7 @@ public class PivotMiddleCmd extends CommandBase{
     @Override
     public void execute(){ // Executes and runs the Pivot Arm PID
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        p_subsystem.pivotArmPID(130);
+        p_subsystem.pivotArmPID(65);
    
     }
 

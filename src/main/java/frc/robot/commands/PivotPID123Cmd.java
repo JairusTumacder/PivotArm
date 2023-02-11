@@ -22,7 +22,7 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
         SmartDashboard.putNumber("Pivot Encoder: ", p_subsystem.getEncoder());
         switch(steps){
             case 0: 
-            p_subsystem.pivotArmPID(1500);
+            p_subsystem.pivotArmPID(65);
             steps++;
             break;
 
@@ -32,7 +32,7 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
             break;
 
             case 2: 
-            p_subsystem.pivotArmPID(4000);
+            p_subsystem.pivotArmPID(130);
             steps++;
             break;
         }

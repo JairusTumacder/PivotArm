@@ -45,6 +45,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     //p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick moves up and down, move the pivot arm in the same direction
+    p_subsystem.setDefaultCommand(new PivotArmPIDCmd(p_subsystem));
     configureBindings();
   }
   /**
@@ -67,8 +68,8 @@ public class RobotContainer {
     new JoystickButton(joystick1, 4).onTrue(new PivotHighCmd(p_subsystem)); // When the joystick's fourth button is toggled, run the Pivot PID3 Command
     new JoystickButton(joystick1, 5).onTrue(new PivotPID123Cmd(p_subsystem)); // When the joystick's fifth button is toggled, run the Pivot PID123 Command
     new JoystickButton(joystick1, 6).onTrue(new ResetEncoder(p_subsystem)); // When the joystick's sixth button is toggled, reset the encoders
-    new JoystickButton(joystick1, 7).onTrue(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick's seventh button is pressed, drive the motors using the joystick
-    new JoystickButton(joystick1, 7).onFalse(new PivotArmPIDCmd(p_subsystem)); // When the joystick's eighth button is released, lock the PID based on the encoder
+    new JoystickButton(joystick1, 7).whileTrue(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // While the joystick's seventh button is pressed, drive the motors using the joystick
+    //new JoystickButton(joystick1, 7).whileFalse(new PivotArmPIDCmd(p_subsystem)); // When the joystick's eighth button is released, lock the PID based on the encoder
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
