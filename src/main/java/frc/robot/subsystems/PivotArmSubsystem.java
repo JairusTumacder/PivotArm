@@ -98,7 +98,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         pivotArmPID(getEncoder());
     }
 
-    // This code was made by John Carlo
     public void lockPIDatSetpoint(int setPoint){ // Sets the PID to the certain encoder value
         pivotArmPID(setPoint);
     }
