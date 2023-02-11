@@ -14,7 +14,6 @@ public class PivotArmPIDCmd extends CommandBase{
 
     @Override
     public void initialize(){
-        p_subsystem.pivotStop();
     }
 
     @Override
@@ -26,7 +25,7 @@ public class PivotArmPIDCmd extends CommandBase{
 
     @Override
     public void end(boolean interrupted){ // Ends the code when isFinished is true
-
+        
     }
 
     @Override

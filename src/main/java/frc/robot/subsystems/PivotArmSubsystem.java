@@ -27,7 +27,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     /*private double kp;
     private double ki; 
     private double kd;*/
-    private final PIDController pid = new PIDController(0.05, 0, 0);
+    private final PIDController pid = new PIDController(0.005, 0.0005, 0);
     //private final TalonEncoder tEnc;
     private double before;
 
@@ -42,7 +42,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     /////////////////////////
    ///  Encoder Methods  ///
   /////////////////////////
-    public double getEncoder(){ // Return the Encoder Value
+    public int getEncoder(){ // Return the Encoder Value
         //return right.getSensorCollection().getQuadraturePosition();
         return sEnc.get();
     }
@@ -95,9 +95,12 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public void lockPID(){ // Sets the PID to the certain encoder value
-        double setpoint = getEncoder();
-        pivotArmPID(pidOutput(setpoint));
-        compareErrors();
+        pivotArmPID(getEncoder());
+    }
+
+    // This code was made by John Carlo
+    public void lockPIDatSetpoint(int setPoint){ // Sets the PID to the certain encoder value
+        pivotArmPID(setPoint);
     }
 
     //////////////////////////

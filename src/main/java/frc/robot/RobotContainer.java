@@ -8,6 +8,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.PivotArmButtonCmd;
+import frc.robot.commands.PivotArmDefault;
 import frc.robot.commands.PivotArmJoystickCmd;
 import frc.robot.commands.PivotPID123Cmd;
 import frc.robot.commands.PivotStartCmd;
@@ -45,7 +46,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     //p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // When the joystick moves up and down, move the pivot arm in the same direction
-    p_subsystem.setDefaultCommand(new PivotArmPIDCmd(p_subsystem));
+    //p_subsystem.setDefaultCommand(new PivotArmPIDCmd(p_subsystem));
+    p_subsystem.setDefaultCommand(new PivotArmDefault(p_subsystem));
     configureBindings();
   }
   /**
