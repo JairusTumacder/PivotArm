@@ -36,8 +36,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    ///  Pivot Arm Subsystem Constructor  ///
   /////////////////////////////////////////
     public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
-        //tEnc = enc;
-        pid.setTolerance(5);
+        //tEnc = enc
     }
 
     /////////////////////////
@@ -96,7 +95,9 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public void lockPID(){ // Sets the PID to the certain encoder value
-        pivotArmPID(pidOutput(getEncoder()));
+        double setpoint = getEncoder();
+        pivotArmPID(pidOutput(setpoint));
+        compareErrors();
     }
 
     //////////////////////////

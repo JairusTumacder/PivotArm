@@ -14,7 +14,7 @@ public class PivotArmPIDCmd extends CommandBase{
 
     @Override
     public void initialize(){
-
+        p_subsystem.pivotStop();
     }
 
     @Override
