@@ -25,11 +25,6 @@ public class ResetEncoder extends CommandBase {
 
     @Override
     public void end(boolean interrupted){ // Runs the timer and while it is less than 2 seconds, reset the encoders
-        timer.reset();
-        timer.start();
-        while(timer.get() < 2){
-
-        }
         p_subsystem.resetEncoder();
     }
 

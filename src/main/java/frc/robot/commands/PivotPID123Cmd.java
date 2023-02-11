@@ -14,7 +14,7 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
     }
     @Override
     public void initialize(){ // Runs the code when the command starts
-        p_subsystem.limitPress();
+        p_subsystem.resetEncoder();
         steps = 0;
     }
     @Override
@@ -22,16 +22,21 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
         SmartDashboard.putNumber("Pivot Encoder: ", p_subsystem.getEncoder());
         switch(steps){
             case 0: 
-            p_subsystem.pivotArmPID(65);
-            steps++;
-            break;
-
-            case 1:
             p_subsystem.limitPress();
             steps++;
             break;
 
-            case 2: 
+            case 1: 
+            p_subsystem.pivotArmPID(65);
+            steps++;
+            break;
+
+            case 2:
+            p_subsystem.limitPress();
+            steps++;
+            break;
+
+            case 3: 
             p_subsystem.pivotArmPID(130);
             steps++;
             break;
@@ -43,6 +48,6 @@ public class PivotPID123Cmd extends CommandBase{ // PID123 Command
     }
     @Override
     public boolean isFinished(){ // The command finishes when this returns false
-        return steps == 3;
+        return steps == 4;
     }
 }
