@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class ResetEncoder extends CommandBase {
     private PivotArmSubsystem p_subsystem; 
+    private Timer timer;
 
     public ResetEncoder(PivotArmSubsystem p_subs){ // Reset Encoder Command
         p_subsystem = p_subs;
@@ -13,19 +14,23 @@ public class ResetEncoder extends CommandBase {
     }
 
     @Override
-    public void initialize(){
+    public void initialize(){ // Runs this code first when the command is run 
 
     }
 
     @Override
-    public void execute(){ // Executes and resets the encoder
-        p_subsystem.resetEncoder();
+    public void execute(){ // Executes this code when the command is run
    
     }
 
     @Override
-    public void end(boolean interrupted){ // Runs this code when it is finished 
+    public void end(boolean interrupted){ // Runs the timer and while it is less than 2 seconds, reset the encoders
+        timer.reset();
+        timer.start();
+        while(timer.get() < 2){
 
+        }
+        p_subsystem.resetEncoder();
     }
 
     @Override

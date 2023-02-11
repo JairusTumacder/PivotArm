@@ -19,16 +19,16 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     ///////////////// 
    //  Variables  //
   /////////////////
-    private final TalonSRX right = new TalonSRX(4);
+    //private final TalonSRX right = new TalonSRX(4);
     private final WPI_TalonSRX talon =  new WPI_TalonSRX(5);
     private final DigitalInput limitSwitch = new DigitalInput(6);
     private final DigitalInput encoder = new DigitalInput(5);
     private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
-    private double kp;
+    /*private double kp;
     private double ki; 
-    private double kd;
+    private double kd;*/
     private final PIDController pid = new PIDController(0.05, 0, 0);
-    private final TalonEncoder tEnc;
+    //private final TalonEncoder tEnc;
     private double before;
 
 
@@ -36,7 +36,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    ///  Pivot Arm Subsystem Constructor  ///
   /////////////////////////////////////////
     public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
-        tEnc = enc;
+        //tEnc = enc;
         pid.setTolerance(5);
     }
 
@@ -97,7 +97,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
     public void lockPID(){ // Sets the PID to the certain encoder value
         pivotArmPID(pidOutput(getEncoder()));
-        compareErrors();
     }
 
     //////////////////////////
@@ -145,11 +144,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void periodic(){ // Prints and edits kp, ki, and kd so you do not have to redeploy and edit code
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints out a boolean, returning true or false if the limit switch is pressed or not
-        kp = SmartDashboard.getNumber("kP", 0);
+        /*kp = SmartDashboard.getNumber("kP", 0);
         SmartDashboard.putNumber("kP", kp);
         ki = SmartDashboard.getNumber("kI", 0);
         SmartDashboard.putNumber("kI", ki);
         kd = SmartDashboard.getNumber("kD", 0);
-        SmartDashboard.putNumber("kD", kd);
+        SmartDashboard.putNumber("kD", kd);*/
     }
 }

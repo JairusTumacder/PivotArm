@@ -1,13 +1,14 @@
+
 package frc.robot.commands;
 
 import frc.robot.subsystems.PivotArmSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class PivotPID2Cmd extends CommandBase{
+public class PivotHighCmd extends CommandBase{
     private PivotArmSubsystem p_subsystem; 
 
-    public PivotPID2Cmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
+    public PivotHighCmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
         p_subsystem = p_subs;
         addRequirements(p_subs);
     }
@@ -20,7 +21,7 @@ public class PivotPID2Cmd extends CommandBase{
     @Override
     public void execute(){ // Executes and runs the Pivot Arm PID
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        p_subsystem.pivotArmPID(130);
+        p_subsystem.pivotArmPID(65);
    
     }
 
