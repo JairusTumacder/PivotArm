@@ -22,7 +22,7 @@ public class PivotArmDefault extends CommandBase {
 
   @Override
   public void execute() {
-    subs.lockPIDatSetpoint(subs.getEncoder());
+    subs.lockPIDatSetpoint(lastEncoder);
   }
 
   @Override

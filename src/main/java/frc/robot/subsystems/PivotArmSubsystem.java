@@ -27,7 +27,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     /*private double kp;
     private double ki; 
     private double kd;*/
-    private final PIDController pid = new PIDController(0.005, 0.0005, 0);
+    private final PIDController pid = new PIDController(0.05, 0, 0);
     //private final TalonEncoder tEnc;
     private double before;
 
