@@ -31,6 +31,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     //private final TalonEncoder tEnc;
     private double before;
     private int lastEncoder = getEncoder();
+    private boolean locked = false;
+    private int setpoint;
 
 
     /////////////////////////////////////////
@@ -38,6 +40,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
   /////////////////////////////////////////
     public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
         //tEnc = enc
+        pid.setTolerance(5);
     }
 
     /////////////////////////
@@ -95,6 +98,13 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         return limitSwitch.get();
     }
 
+    public void lockPIDAtSetpoint(int setPoint){
+        while(talon.get() <= 0){
+            setPoint = getEncoder();
+        }
+
+    }
+
     //////////////////////////
    /// Pivot PID Methods  ///
   //////////////////////////
@@ -138,9 +148,18 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
   ////////////////////////
     @Override
     public void periodic(){ // Prints and edits kp, ki, and kd so you do not have to redeploy and edit code
+
+        if(talon.get() <= 0){
+            setpoint = getEncoder();
+            pivotArmPID(pidOutput(setpoint));
+        }
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints out a boolean, returning true or false if the limit switch is pressed or not
         SmartDashboard.putNumber("Lock at:", lastEncoder);
+
+        if(limitHit()){
+            resetEncoder();
+        }
         /*kp = SmartDashboard.getNumber("kP", 0);
         SmartDashboard.putNumber("kP", kp);
         ki = SmartDashboard.getNumber("kI", 0);

@@ -73,6 +73,7 @@ public class RobotContainer {
     //new JoystickButton(joystick1, 7).whileFalse(new PivotArmPIDCmd(p_subsystem)); // When the joystick's eighth button is released, lock the PID based on the encoder
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+
     m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
