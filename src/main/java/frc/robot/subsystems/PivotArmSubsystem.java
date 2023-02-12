@@ -40,7 +40,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
   /////////////////////////////////////////
     public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
         //tEnc = enc
-        pid.setTolerance(5);
     }
 
     /////////////////////////
