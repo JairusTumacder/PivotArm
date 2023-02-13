@@ -11,7 +11,7 @@ public class PivotArmJoystickCmd extends CommandBase{
     private final DoubleSupplier speed;
 
     public PivotArmJoystickCmd(PivotArmSubsystem p_subs, DoubleSupplier speed){ // Command Constructor
-        p_subsystem = p_subs;
+        this.p_subsystem = p_subs;
         this.speed = speed;
         addRequirements(p_subs);
     }

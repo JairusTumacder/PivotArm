@@ -2,12 +2,7 @@ package frc.robot.subsystems;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.subsystems.TalonEncoder;
-import frc.robot.subsystems.SingleChannelEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -27,12 +22,10 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     /*private double kp;
     private double ki; 
     private double kd;*/
-    private final PIDController pid = new PIDController(0.05, 0, 0);
+    private final PIDController pid = new PIDController(0.01, 0, 0);
     //private final TalonEncoder tEnc;
     private double before;
     private int lastEncoder = getEncoder();
-    private boolean locked = false;
-    private int setpoint;
 
 
     /////////////////////////////////////////
@@ -61,7 +54,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void pivotUp(DoubleSupplier speed){ // Pivots the arm up based on its speed
         //right.set(ControlMode.PercentOutput, pivotDeadZone(speed.getAsDouble()));
         talon.set(pivotDeadZone(speed.getAsDouble()));
-    }
+     }
 
     public void pivotArm(double speed){ // Pivots the arm based on its speed
         //right.set(ControlMode.PercentOutput, speed);
@@ -101,7 +94,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         while(talon.get() <= 0){
             setPoint = getEncoder();
         }
-
+        pivotArmPID(setPoint);
     }
 
     //////////////////////////
@@ -148,17 +141,9 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     @Override
     public void periodic(){ // Prints and edits kp, ki, and kd so you do not have to redeploy and edit code
 
-        if(talon.get() <= 0){
-            setpoint = getEncoder();
-            pivotArmPID(pidOutput(setpoint));
-        }
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints out a boolean, returning true or false if the limit switch is pressed or not
         SmartDashboard.putNumber("Lock at:", lastEncoder);
-
-        if(limitHit()){
-            resetEncoder();
-        }
         /*kp = SmartDashboard.getNumber("kP", 0);
         SmartDashboard.putNumber("kP", kp);
         ki = SmartDashboard.getNumber("kI", 0);
