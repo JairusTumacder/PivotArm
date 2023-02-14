@@ -11,11 +11,9 @@ import frc.robot.subsystems.PivotArmSubsystem;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.TalonEncoder;
 
 public class RobotContainer {
-  private TalonEncoder tEnc;
-  private final PivotArmSubsystem p_subsystem = new PivotArmSubsystem(tEnc);
+  private final PivotArmSubsystem p_subsystem = new PivotArmSubsystem();
 
   private final Joystick joystick1 = new Joystick(0);
 

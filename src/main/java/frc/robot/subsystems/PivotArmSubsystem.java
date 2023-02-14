@@ -14,16 +14,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     ///////////////// 
    //  Variables  //
   /////////////////
-    //private final TalonSRX right = new TalonSRX(4);
     private final WPI_TalonSRX talon =  new WPI_TalonSRX(5);
     private final DigitalInput limitSwitch = new DigitalInput(6);
     private final DigitalInput encoder = new DigitalInput(5);
     private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
-    /*private double kp;
-    private double ki; 
-    private double kd;*/
-    private final PIDController pid = new PIDController(0.01, 0, 0);
-    //private final TalonEncoder tEnc;
+    private final PIDController pid = new PIDController(0.1, 0, 0);
     private double before;
     private int lastEncoder = getEncoder();
 
@@ -31,8 +26,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     /////////////////////////////////////////
    ///  Pivot Arm Subsystem Constructor  ///
   /////////////////////////////////////////
-    public PivotArmSubsystem(TalonEncoder enc){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
-        //tEnc = enc
+    public PivotArmSubsystem(){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
     }
 
     /////////////////////////
