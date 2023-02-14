@@ -132,17 +132,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     ////////////////////////
    ///  Printing Method ///
   ////////////////////////
-    @Override
-    public void periodic(){ // Prints and edits kp, ki, and kd so you do not have to redeploy and edit code
+  
+    public void periodic(){
 
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
-        SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints out a boolean, returning true or false if the limit switch is pressed or not
-        SmartDashboard.putNumber("Lock at:", lastEncoder);
-        /*kp = SmartDashboard.getNumber("kP", 0);
-        SmartDashboard.putNumber("kP", kp);
-        ki = SmartDashboard.getNumber("kI", 0);
-        SmartDashboard.putNumber("kI", ki);
-        kd = SmartDashboard.getNumber("kD", 0);
-        SmartDashboard.putNumber("kD", kd);*/
+        SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints if the limit switch is pressed or not
+        SmartDashboard.putNumber("Lock at:", lastEncoder); // Prints out the last encoder value
     }
 }
