@@ -138,5 +138,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints if the limit switch is pressed or not
         SmartDashboard.putNumber("Lock at:", lastEncoder); // Prints out the last encoder value
+        SmartDashboard.putNumber("Arm Voltage: ", talon.getMotorOutputVoltage()); // Prints out the motor's voltage
     }
 }
