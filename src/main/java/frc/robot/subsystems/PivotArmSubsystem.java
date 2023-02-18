@@ -23,7 +23,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     //private final DigitalInput encoder = new DigitalInput(5);
     //private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
     private final RelativeEncoder rEnc;
-    private final PIDController pid = new PIDController(0.1, 0, 0);
+    private final PIDController pid = new PIDController(0, 0, 0);
     private double before;
     private double lastEncoder = getEncoder();
 
@@ -122,11 +122,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
             return 0;
         }
-        if(error > 0.5){ // If the error is greater than a limit of 0.5, return a value of 0.5
-            return 0.5;
+        if(error > 0){ // If the error is greater than a limit of 0.5, return a value of 0.5
+            return 0;
         }
-        else if(error < -0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
-            return -0.5;
+        else if(error < 0){ // If the error is less than a limit of -0.5, return a value of -0.5
+            return 0;
         }
         else{ // If everything else fails, return the error 
             return error;

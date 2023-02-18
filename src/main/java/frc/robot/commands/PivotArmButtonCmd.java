@@ -21,10 +21,10 @@ public class PivotArmButtonCmd extends CommandBase{ // Pivot Arm Button Command
     @Override
     public void execute(){ // Executes the code and drives the TalonSRX motor to the desired encoder of 3000 when A is pressed
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        if(p_subsystem.getEncoder() < 130){
+        if(p_subsystem.getEncoder() < 0){
             p_subsystem.pivotArm(0.2);
         }
-        else if(p_subsystem.getEncoder() > 130){
+        else if(p_subsystem.getEncoder() > 0){
             p_subsystem.pivotArm(-0.2);
         }
         else{
@@ -40,7 +40,7 @@ public class PivotArmButtonCmd extends CommandBase{ // Pivot Arm Button Command
 
     @Override
     public boolean isFinished(){ 
-        if(p_subsystem.getEncoder() > 3000){ // Returns true and ends the code when the encoder is greater than 3000
+        if(p_subsystem.getEncoder() > 0){ // Returns true and ends the code when the encoder is greater than 3000
             return true;
         } 
         else{ // Returns false and continues to run the code when the encoder is less than 3000
