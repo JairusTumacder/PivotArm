@@ -29,7 +29,6 @@ public class RobotContainer {
     new JoystickButton(joystick1, 4).onTrue(new PivotHighCmd(p_subsystem)); // Button for the high position
     new JoystickButton(joystick1, 5).onTrue(new ResetEncoder(p_subsystem)); // Button for reseting the encoder position
     new JoystickButton(joystick1, 6).toggleOnTrue(new PivotArmJoystickCmd(p_subsystem, () -> joystick1.getY())); // Button for driving the motor using the joystick
-
   }
 
   public Command getAutonomousCommand() {

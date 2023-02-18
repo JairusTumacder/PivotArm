@@ -5,7 +5,10 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -14,32 +17,37 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     ///////////////// 
    //  Variables  //
   /////////////////
-    private final WPI_TalonSRX talon =  new WPI_TalonSRX(5);
+    //private final WPI_TalonSRX talon =  new WPI_TalonSRX(5);
+    private final CANSparkMax canspark = new CANSparkMax(0, MotorType.kBrushless);
     private final DigitalInput limitSwitch = new DigitalInput(6);
-    private final DigitalInput encoder = new DigitalInput(5);
-    private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
+    //private final DigitalInput encoder = new DigitalInput(5);
+    //private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
+    private final RelativeEncoder rEnc;
     private final PIDController pid = new PIDController(0.1, 0, 0);
     private double before;
-    private int lastEncoder = getEncoder();
+    private double lastEncoder = getEncoder();
 
 
     /////////////////////////////////////////
    ///  Pivot Arm Subsystem Constructor  ///
   /////////////////////////////////////////
     public PivotArmSubsystem(){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
+        rEnc = canspark.getEncoder();
     }
 
     /////////////////////////
    ///  Encoder Methods  ///
   /////////////////////////
-    public int getEncoder(){ // Return the Encoder Value
+    public double getEncoder(){ // Return the Encoder Value
         //return right.getSensorCollection().getQuadraturePosition();
-        return sEnc.get();
+        //return sEnc.get();
+        return rEnc.getPosition();
     }
 
     public void resetEncoder(){ // Resets the Encoder to a Position of 0
         //right.getSensorCollection().setQuadraturePosition(0, 5);
-        sEnc.reset();
+        //sEnc.reset();
+        rEnc.setPosition(0);
     }
 
     /////////////////////////////////
@@ -47,17 +55,20 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
   /////////////////////////////////
     public void pivotUp(DoubleSupplier speed){ // Pivots the arm up based on its speed
         //right.set(ControlMode.PercentOutput, pivotDeadZone(speed.getAsDouble()));
-        talon.set(pivotDeadZone(speed.getAsDouble()));
+        //talon.set(pivotDeadZone(speed.getAsDouble()));
+        canspark.set(pivotDeadZone(speed.getAsDouble()));
      }
 
     public void pivotArm(double speed){ // Pivots the arm based on its speed
         //right.set(ControlMode.PercentOutput, speed);
-        talon.set(speed);
+        //talon.set(speed);
+        canspark.set(speed);
     }
 
     public void pivotStop(){ // Stops the Pivot Arm Motor 
         //right.set(ControlMode.PercentOutput, 0);
-        talon.stopMotor();
+        //talon.stopMotor();
+        canspark.stopMotor();
     }
 
     public double pivotDeadZone(double speed){ // Sets a deadzone for the Pivot Arm when moved by a joystick
@@ -72,7 +83,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void limitPress(){ // Returns whether the limit is pressed or not
         if(!limitSwitch.get()){ // If the limit switch is not pressed, runs the PID to 0
             //right.set(ControlMode.PercentOutput, pidOutput(0));
-            talon.set(pidOutput(0));
+            //talon.set(pidOutput(0));
+            canspark.set(pidOutput(0));
         }
         else{ // If the limit switch is pressed, stop the pivot arm and reset the encoders
             pivotStop();
@@ -84,8 +96,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         return limitSwitch.get();
     }
 
-    public void lockPIDAtSetpoint(int setPoint){
-        while(talon.get() <= 0){
+    public void lockPIDAtSetpoint(double setPoint){
+        while(canspark.get() <= 0){
             setPoint = getEncoder();
         }
         pivotArmPID(setPoint);
@@ -125,7 +137,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         double e = pid.calculate(setpoint);
         SmartDashboard.putNumber("Error: ", e);
         //right.set(ControlMode.PercentOutput, pidOutput(setpoint));
-        talon.set(pidOutput(setpoint));
+        //talon.set(pidOutput(setpoint));
+        canspark.set(pidOutput(setpoint));
         compareErrors();
     }
     
@@ -134,10 +147,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
   ////////////////////////
   
     public void periodic(){
-
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints if the limit switch is pressed or not
         SmartDashboard.putNumber("Lock at:", lastEncoder); // Prints out the last encoder value
-        SmartDashboard.putNumber("Arm Voltage: ", talon.getMotorOutputVoltage()); // Prints out the motor's voltage
     }
 }
