@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -18,20 +19,22 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    //  Variables  //
   /////////////////
     //private final WPI_TalonSRX talon =  new WPI_TalonSRX(5);
-    private final CANSparkMax canspark = new CANSparkMax(0, MotorType.kBrushless);
-    private final DigitalInput limitSwitch = new DigitalInput(6);
+    private final CANSparkMax canspark = new CANSparkMax(14, MotorType.kBrushless);
+    private final DigitalInput limitSwitch = new DigitalInput(2);
     //private final DigitalInput encoder = new DigitalInput(5);
     //private final SingleChannelEncoder sEnc = new SingleChannelEncoder(talon, encoder);
     private final RelativeEncoder rEnc;
-    private final PIDController pid = new PIDController(0, 0, 0);
+    private final PIDController pid = new PIDController(0.07, 0, 0);
     private double before;
-    private double lastEncoder = getEncoder();
+    //private double lastEncoder = getEncoder();
 
 
     /////////////////////////////////////////
    ///  Pivot Arm Subsystem Constructor  ///
   /////////////////////////////////////////
     public PivotArmSubsystem(){ // Instantiates the Talon Encoder variable and sets the tolerance for the PID
+        canspark.setIdleMode(IdleMode.kBrake);
+        canspark.setInverted(true);
         rEnc = canspark.getEncoder();
     }
 
@@ -122,11 +125,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
             return 0;
         }
-        if(error > 0){ // If the error is greater than a limit of 0.5, return a value of 0.5
-            return 0;
+        if(error > 0.5){ // If the error is greater than a limit of 0.5, return a value of 0.5
+            return 0.5;
         }
-        else if(error < 0){ // If the error is less than a limit of -0.5, return a value of -0.5
-            return 0;
+        else if(error < -0.5){ // If the error is less than a limit of -0.5, return a value of -0.5
+            return -0.5;
         }
         else{ // If everything else fails, return the error 
             return error;
@@ -149,6 +152,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void periodic(){
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints if the limit switch is pressed or not
-        SmartDashboard.putNumber("Lock at:", lastEncoder); // Prints out the last encoder value
+        //SmartDashboard.putNumber("Lock at:", lastEncoder); // Prints out the last encoder value
     }
 }
