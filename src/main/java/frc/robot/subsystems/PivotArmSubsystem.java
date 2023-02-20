@@ -26,7 +26,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     private final RelativeEncoder rEnc;
     private final PIDController pid = new PIDController(0.07, 0, 0);
     private double before;
-    //private double lastEncoder = getEncoder();
 
 
     /////////////////////////////////////////
@@ -100,13 +99,6 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         return limitSwitch.get();
     }
 
-    public void lockPIDAtSetpoint(double setPoint){ // Sets the encoder value to a setpoint and runs the PID based on the setpoint
-        while(canspark.get() <= 0){
-            setPoint = getEncoder();
-        }
-        pivotArmPID(setPoint);
-    }
-
     //////////////////////////
    /// Pivot PID Methods  ///
   //////////////////////////
@@ -153,6 +145,5 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     public void periodic(){
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder()); // Prints out the encoder values
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get()); // Prints if the limit switch is pressed or not
-        //SmartDashboard.putNumber("Lock at:", lastEncoder); // Prints out the last encoder value
     }
 }
