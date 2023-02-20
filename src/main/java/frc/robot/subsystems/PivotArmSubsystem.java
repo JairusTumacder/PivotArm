@@ -100,7 +100,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         return limitSwitch.get();
     }
 
-    public void lockPIDAtSetpoint(double setPoint){
+    public void lockPIDAtSetpoint(double setPoint){ // Sets the encoder value to a setpoint and runs the PID based on the setpoint
         while(canspark.get() <= 0){
             setPoint = getEncoder();
         }
