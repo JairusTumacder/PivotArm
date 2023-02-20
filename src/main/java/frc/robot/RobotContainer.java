@@ -32,7 +32,7 @@ public class RobotContainer {
     new JoystickButton(xController, 4).onTrue(new PivotHighCmd(p_subsystem)); // Button for the high position
     new JoystickButton(xController, 5).onTrue(new ResetEncoder(p_subsystem)); // Button for reseting the encoder position
     new JoystickButton(xController, 6).toggleOnTrue(new PivotArmJoystickCmd(p_subsystem, () -> xController.getLeftY())); // Button for driving the motor using the joystick
-    new JoystickButton(xController, 7).onTrue(new LimitSwitch(p_subsystem).andThen(new PivotStartCmd(p_subsystem))); // Button for the Starting Configuration
+    new JoystickButton(xController, 7).onTrue(new LimitSwitch(p_subsystem)); // Button for the Starting Configuration
 
   }
 

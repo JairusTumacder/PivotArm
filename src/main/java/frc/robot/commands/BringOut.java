@@ -1,12 +1,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.commands.LimitSwitch;
 
-public class StartingConfiguration extends CommandBase{
+public class BringOut extends CommandBase{
     private LimitSwitch limit;
 
-    public StartingConfiguration(LimitSwitch lswitch){ // Add Elevator Command
+    public BringOut(LimitSwitch lswitch){ // Add two Elevator Command
         limit = lswitch;
         addRequirements();
     }
@@ -16,7 +15,7 @@ public class StartingConfiguration extends CommandBase{
     }
     @Override
     public void execute(){
-        limit.andThen(limit); // Add Elevator Command
+        limit.andThen(limit).andThen(limit); // Add two Elevator Command
     }
     @Override
     public void end(boolean interrupted){
