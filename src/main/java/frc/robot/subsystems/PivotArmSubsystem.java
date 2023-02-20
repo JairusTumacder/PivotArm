@@ -88,6 +88,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
             //right.set(ControlMode.PercentOutput, pidOutput(0));
             //talon.set(pidOutput(0));
             canspark.set(pidOutput(0));
+            compareErrors();
         }
         else{ // If the limit switch is pressed, stop the pivot arm and reset the encoders
             pivotStop();
