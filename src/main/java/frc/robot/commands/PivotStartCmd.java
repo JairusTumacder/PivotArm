@@ -37,6 +37,6 @@ public class PivotStartCmd extends CommandBase{ // Pivot PID Command
 
     @Override
     public boolean isFinished(){ // Returns true when the code is finished
-        return p_subsystem.limitHit();
+        return p_subsystem.isTucked();
     }
 }

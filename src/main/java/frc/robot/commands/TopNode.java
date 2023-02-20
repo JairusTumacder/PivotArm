@@ -2,13 +2,13 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-public class StartingConfiguration extends CommandBase{
-    private isTucked limit;
-    private ArmSafetyPosition safety;
+public class TopNode extends CommandBase{
+    private HighPosition high;
+    private PivotMiddleCmd mid;
 
-    public StartingConfiguration(isTucked lswitch, ArmSafetyPosition sposition){
-        limit = lswitch;
-        safety = sposition;
+    public TopNode(HighPosition hposition, PivotMiddleCmd mposition){ // Add Elevator Command
+        high = hposition;
+        mid = mposition;
         addRequirements();
     }
 
@@ -17,8 +17,8 @@ public class StartingConfiguration extends CommandBase{
     }
 
     @Override
-    public void execute(){
-        safety.andThen(limit);
+    public void execute(){ // Add Elevator Command
+        high.andThen(mid);
     }
 
     @Override

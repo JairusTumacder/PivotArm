@@ -12,18 +12,19 @@ public class SetIdleMode extends CommandBase{
         p_subs = subs;
         addRequirements(subs);
     }
+
     @Override
     public void initialize(){
-        
     }
+
     @Override
     public void execute(){
-
     }
+
     @Override
     public void end(boolean interrupted){
-
     }
+    
     @Override
     public boolean isFinished(){
         return false;
