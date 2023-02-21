@@ -41,7 +41,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(xController, 1).onTrue(new ZeroPosition(elevator)); // Button for setting it to a certain encoder
-    new JoystickButton(xController, 2).onTrue(new ArmSafetyPosition(elevator)); // Button for the starting position
+    new JoystickButton(xController, 2).onTrue(new isTucked(p_subsystem)); // Button for the starting position
     new JoystickButton(xController, 3).onTrue(new MidPosition(elevator)); // Button for the middle position
     new JoystickButton(xController, 4).onTrue(new HighPosition(elevator)); // Button for the high position
     new JoystickButton(xController, 5).onTrue(new ResetEncoder(p_subsystem)); // Button for reseting the encoder position

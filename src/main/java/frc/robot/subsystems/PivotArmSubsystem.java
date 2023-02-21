@@ -83,14 +83,14 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public void limitPress(){ // Returns whether the limit is pressed or not
-        if(!limitSwitch.get()){ // If the limit switch is not pressed, runs the PID to 0
+        if(limitSwitch.get()){ // If the limit switch is not pressed, runs the PID to 0
             //right.set(ControlMode.PercentOutput, pidOutput(0));
             //talon.set(pidOutput(0));
-            canspark.set(-0.2);
+            canspark.set(pidOutput(0));
+            compareErrors();
         }
         else{ // If the limit switch is pressed, stop the pivot arm and reset the encoders
             pivotStop();
-            resetEncoder();
         }
     }
                 
