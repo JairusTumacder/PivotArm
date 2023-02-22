@@ -3,10 +3,10 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PivotArmSubsystem;
 
-public class isTucked extends CommandBase{
+public class TuckedIn extends CommandBase{
     private PivotArmSubsystem p_subs;
 
-    public isTucked(PivotArmSubsystem subs){
+    public TuckedIn(PivotArmSubsystem subs){
         p_subs = subs;
         addRequirements(subs);
     }
@@ -17,7 +17,7 @@ public class isTucked extends CommandBase{
 
     @Override
     public void execute(){
-        p_subs.limitPress();
+        p_subs.tuckedIn();
     }
 
     @Override

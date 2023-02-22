@@ -19,6 +19,7 @@ public class SetIdleMode extends CommandBase{
 
     @Override
     public void execute(){
+        p_subs.setIdleMode();
     }
 
     @Override
