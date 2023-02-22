@@ -128,7 +128,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
    ///  Printing Method ///
   ////////////////////////
   
-    public void periodic(){ // 
+    public void periodic(){ // Periodic method to print the encoder and limit switch values
         SmartDashboard.putNumber("Pivot Arm Encoder: ", getEncoder());
         SmartDashboard.putBoolean("Limit Switch: ", limitSwitch.get());
         if(!isTucked()){

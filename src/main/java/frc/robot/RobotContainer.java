@@ -1,7 +1,7 @@
 
 package frc.robot;
 
-import frc.robot.commands.TuckedIn;
+import frc.robot.commands.TuckIn;
 import frc.robot.commands.ArmSafetyPosition;
 import frc.robot.commands.BringOut;
 import frc.robot.commands.HighPosition;
@@ -23,7 +23,7 @@ public class RobotContainer {
   private final PivotArmSubsystem p_subsystem = new PivotArmSubsystem(); 
   private final ElevatorSubsystem elevator = new ElevatorSubsystem();
   private final ArmSafetyPosition arm = new ArmSafetyPosition(elevator);
-  private final TuckedIn tucked = new TuckedIn(p_subsystem);
+  private final TuckIn tucked = new TuckIn(p_subsystem);
   private final PivotMiddleCmd mid = new PivotMiddleCmd(p_subsystem);
   private final ZeroPosition zero = new ZeroPosition(elevator);
   private final HighPosition high = new HighPosition(elevator);
@@ -36,7 +36,7 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(xController, 1).onTrue(new ZeroPosition(elevator)); // Button for setting it to a certain encoder
-    new JoystickButton(xController, 2).onTrue(new TuckedIn(p_subsystem)); // Button for the starting position
+    new JoystickButton(xController, 2).onTrue(new TuckIn(p_subsystem)); // Button for the starting position
     new JoystickButton(xController, 3).onTrue(new MidPosition(elevator)); // Button for the middle position
     new JoystickButton(xController, 4).onTrue(new HighPosition(elevator)); // Button for the high position
     new JoystickButton(xController, 5).onTrue(new ResetEncoder(p_subsystem)); // Button for reseting the encoder position

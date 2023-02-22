@@ -17,7 +17,7 @@ public class PivotLowCmd extends CommandBase{
     }
 
     @Override
-    public void execute(){
+    public void execute(){ // Moves the arm to encoder counts: Low Position
         SmartDashboard.putNumber("Pivot Encoder: ", p_subs.getEncoder());
         p_subs.pivotArmPID(0);
     }
