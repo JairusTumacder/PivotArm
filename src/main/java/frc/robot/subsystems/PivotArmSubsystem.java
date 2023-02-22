@@ -73,7 +73,7 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         return !limitSwitch.get();
     }
 
-    public void tuckedIn(){ // Method for tucking the arm in
+    public void tuckIn(){ // Method for tucking the arm in
         if(isTucked()){
             // pivotArmPID(0);
             pivotArm(-0.01);
