@@ -61,10 +61,10 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public double pivotDeadZone(double speed){ // Method for the deadzone of the arm
-        if(Math.abs(speed) < 0.1){ // If the absolute value of the speed is less than 0.1, return a speed of 0
+        if(Math.abs(speed) < 0.1){
             return 0;
         }
-        else{ // If everything else fails, return the speed
+        else{
             return speed;
         }
     }
@@ -74,11 +74,11 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
     }
 
     public void tuckedIn(){ // Method for tucking the arm in
-        if(isTucked()){ // If the limit switch is not pressed, runs the PID to 0
+        if(isTucked()){
             // pivotArmPID(0);
             pivotArm(-0.01);
         }
-        else{ // If the limit switch is pressed, stop the pivot arm and reset the encoders
+        else{
             pivotStop();
         }
     }
@@ -92,10 +92,10 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
   //////////////////////////
     public void compareErrors(){ // Method for the Integral Term: Reset
         double after = pid.getPositionError();
-        if(before > 0 && after < 0){ // If the error changes from a positive to a negative, reset the previous error and the I term
+        if(before > 0 && after < 0){
             pid.reset();
         }
-        else if(before < 0 && after > 0){ // If the error changes from a negative to a positive, reset the previous error and the I term
+        else if(before < 0 && after > 0){
             pid.reset();
         }
         before = pid.getPositionError(); 
@@ -103,16 +103,16 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
 
     public double pidOutput(double setpoint){ // Method for the Porportional Term: 
         double error = pid.calculate(getEncoder(), setpoint);
-        if(pid.atSetpoint()){ // If the PID is at the setpoint, return a value of 0
+        if(pid.atSetpoint()){
             return 0;
         }
-        if(error > 0.01){ // If the error is greater than a limit of 0.5, return a value of 0.5
+        if(error > 0.01){
             return 0.01;
         }
-        else if(error < -0.01){ // If the error is less than a limit of -0.5, return a value of -0.5
+        else if(error < -0.01){
             return -0.01;
         }
-        else{ // If everything else fails, return the error 
+        else{
             return error;
         }
     }

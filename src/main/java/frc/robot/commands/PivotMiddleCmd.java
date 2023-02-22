@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class PivotMiddleCmd extends CommandBase{
     private PivotArmSubsystem p_subsystem; 
 
-    public PivotMiddleCmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
+    public PivotMiddleCmd(PivotArmSubsystem p_subs){
         p_subsystem = p_subs;
         addRequirements(p_subs);
     }
@@ -18,19 +18,19 @@ public class PivotMiddleCmd extends CommandBase{
     }
 
     @Override
-    public void execute(){ // Executes and runs the Pivot Arm PID
+    public void execute(){ // Moves the arm to 100 encoder counts: Mid Position
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
         p_subsystem.pivotArmPID(100);
    
     }
 
     @Override
-    public void end(boolean interrupted){ // Ends the code when isFinished is true
+    public void end(boolean interrupted){
 
     }
 
     @Override
-    public boolean isFinished(){ // Returns true when the code is finished
+    public boolean isFinished(){
         return false;
     }
 }

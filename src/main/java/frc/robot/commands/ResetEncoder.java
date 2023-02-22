@@ -12,22 +12,22 @@ public class ResetEncoder extends CommandBase {
     }
 
     @Override
-    public void initialize(){ // Runs this code first when the command is run 
+    public void initialize(){
 
     }
 
     @Override
-    public void execute(){ // Executes this code when the command is run
+    public void execute(){
    
     }
 
     @Override
-    public void end(boolean interrupted){ // Runs the timer and while it is less than 2 seconds, reset the encoders
+    public void end(boolean interrupted){ // Resets the Encoder
         p_subsystem.resetEncoder();
     }
 
     @Override
-    public boolean isFinished(){ // Ends the code when isFinished is true 
+    public boolean isFinished(){ // Runs the end method
         return true;
     }
     
