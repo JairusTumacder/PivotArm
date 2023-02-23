@@ -134,5 +134,8 @@ public class PivotArmSubsystem extends SubsystemBase{ // Pivot Arm Subsystem
         if(!isTucked()){
             pivotStop();
         }
+        else{
+            
+        }
     }
 }
