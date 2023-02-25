@@ -4,12 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 public class ArmSafetyPosition extends CommandBase {
-  /** Creates a new ElevatorCommand. */
   ElevatorSubsystem elevSub;
   double setPoint;
   public ArmSafetyPosition(ElevatorSubsystem elevSubystem) {
     elevSub = elevSubystem;
-    setPoint = 39;
+    setPoint = 51;
     addRequirements(elevSub);
   }
 
@@ -28,13 +27,9 @@ public class ArmSafetyPosition extends CommandBase {
 
   }
 
+  
   @Override
   public boolean isFinished() {
-    if(elevSub.isAtSetpoint()){ // if setpoint is within tolerance return true
-      return true;
-    }
-    else{ // else if not within tolerance return false
-      return false;
-    }
+    return elevSub.isAtSetpoint(); // stops if the elevator is at the given point
   }
 }

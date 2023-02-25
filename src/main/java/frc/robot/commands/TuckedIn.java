@@ -3,11 +3,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.PivotArmSubsystem;
 
-public class SetIdleMode extends CommandBase{
+public class TuckedIn extends CommandBase{
     private PivotArmSubsystem p_subs;
+    private int setpoint;
 
-    public SetIdleMode(PivotArmSubsystem subs){
+    public TuckedIn(PivotArmSubsystem subs){
         p_subs = subs;
+        setpoint = 0;
         addRequirements(subs);
     }
 
@@ -17,7 +19,13 @@ public class SetIdleMode extends CommandBase{
 
     @Override
     public void execute(){
-        p_subs.setIdleMode();
+        if(!p_subs.isTucked()){
+        p_subs.newSetpoint(p_subs.getEncoder());
+        }
+        else{
+            p_subs.newSetpoint(setpoint);
+           
+        }
     }
 
     @Override
@@ -26,6 +34,6 @@ public class SetIdleMode extends CommandBase{
     
     @Override
     public boolean isFinished(){
-        return false;
+        return !p_subs.isTucked();
     }
 }

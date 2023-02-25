@@ -1,15 +1,16 @@
 package frc.robot.commands;
 
 import frc.robot.subsystems.PivotArmSubsystem;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class PivotMiddleCmd extends CommandBase{
     private PivotArmSubsystem p_subsystem; 
+    private double setpoint;
 
-    public PivotMiddleCmd(PivotArmSubsystem p_subs){
+    public PivotMiddleCmd(PivotArmSubsystem p_subs){ // Pivot PID Constructor 
         p_subsystem = p_subs;
         addRequirements(p_subs);
+        setpoint = 160;
     }
 
     @Override
@@ -18,19 +19,18 @@ public class PivotMiddleCmd extends CommandBase{
     }
 
     @Override
-    public void execute(){ // Moves the arm to 100 encoder counts: Mid Position
-        SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        p_subsystem.pivotArmPID(100);
+    public void execute(){ // Executes and runs the Pivot Arm PID
+        p_subsystem.newSetpoint(setpoint);
    
     }
 
     @Override
-    public void end(boolean interrupted){
+    public void end(boolean interrupted){ // Ends the code when isFinished is true
 
     }
 
     @Override
-    public boolean isFinished(){
-        return false;
+    public boolean isFinished(){ // Returns true when the code is finished
+        return p_subsystem.isAtSetPoint();
     }
 }

@@ -19,9 +19,9 @@ public class PivotStartCmd extends CommandBase{ // Pivot PID Command
     }
 
     @Override
-    public void execute(){ // Tucks the arm in
+    public void execute(){ // Executes and runs the Pivot Arm PID
         SmartDashboard.putNumber("Pivot Encoder:", p_subsystem.getEncoder());
-        p_subsystem.tuckIn();
+        p_subsystem.limitPress();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class PivotStartCmd extends CommandBase{ // Pivot PID Command
     }
 
     @Override
-    public boolean isFinished(){ // 
+    public boolean isFinished(){ // Returns true when the code is finished
         return p_subsystem.isTucked();
     }
 }
