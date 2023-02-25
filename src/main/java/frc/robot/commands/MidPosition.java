@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ElevatorSubsystem;
 
-public class MidNode extends CommandBase {
+public class MidPosition extends CommandBase {
   ElevatorSubsystem elevSub;
   double setPoint;
-  public MidNode(ElevatorSubsystem elevSubystem) {
+  public MidPosition(ElevatorSubsystem elevSubystem) {
     elevSub = elevSubystem;
     setPoint = 120;
     addRequirements(elevSub);
@@ -30,6 +30,7 @@ public class MidNode extends CommandBase {
 
   @Override
   public void end(boolean interrupted){
+    SmartDashboard.putString("is it working", "yes");
 
   }
 
