@@ -20,17 +20,15 @@ public class RobotContainer {
 
   public RobotContainer() {
    // p_subsystem.setDefaultCommand(new PivotArmJoystickCmd(p_subsystem, () -> xController.getLeftY()));
-
-
     configureBindings();
   }
 
   private void configureBindings() {
-    new JoystickButton(xController, 1).onTrue(new LowPickup(p_subsystem, elevator));
-    new JoystickButton(xController, 2).onTrue(new TuckedFromBottom(p_subsystem, elevator));
+    new JoystickButton(xController, 1).onTrue(new LowPickup(p_subsystem, elevator)); // Button for picking up and scoring
+    new JoystickButton(xController, 2).onTrue(new TuckedFromBottom(p_subsystem, elevator)); // Button for tucking from the 
     new JoystickButton(xController, 3).onTrue(new TopNode(p_subsystem, elevator)); // Button for the middle position
     new JoystickButton(xController, 4).onTrue(new TuckedFromTop(p_subsystem, elevator)); // Button for the high position
-    new JoystickButton(xController, 5).onTrue(Tucked.getCommand(p_subsystem, elevator));
+    new JoystickButton(xController, 5).onTrue(Tucked.getCommand(p_subsystem, elevator)); // Button for tucking in from the bottom or top
   }
 
   
